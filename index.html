@@ -3,65 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Actualités Football</title>
+<title>Club App</title>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f5f5;
-        margin: 0;
-        padding: 0;
-    }
-    .container {
-        max-width: 600px;
-        margin: 20px auto;
-        background-color: #fff;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        position: relative;
-    }
-    .source {
-        font-size: 12px;
-        color: gray;
-        margin-bottom: 5px;
-    }
-    .title {
-        font-size: 18px;
-        font-weight: bold;
-        color: #1a0dab;
-        margin-bottom: 10px;
-    }
-    .description {
-        font-size: 14px;
-        margin-bottom: 10px;
-    }
-    .time {
-        font-size: 12px;
-        color: gray;
-    }
-    .thumbnail {
-        float: right;
-        margin-left: 10px;
-        width: 100px;
-        height: auto;
-        border-radius: 5px;
-    }
-    .news-item::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-    /* Bouton admin */
-    #adminBtn{position:absolute;top:10px;right:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;}
-    #adminForm{display:none;margin-top:10px;padding:10px;border:1px solid #ccc;border-radius:8px;}
-    #adminForm input, #adminForm textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:1px solid #ccc;}
-    #adminForm button{background:#0077e6;color:white;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:Arial,sans-serif;background:#f5f5f5;color:#0f1724;}
+main{padding:20px;padding-bottom:100px;min-height:100vh;position:relative;}
+
+/* TITRE */
+h1{text-align:center;margin-bottom:20px;font-size:2rem;font-weight:900;}
+
+/* BOUTON RETOUR */
+.btn-back{position:absolute;top:10px;left:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;z-index:200;}
+
+/* CARTES */
+.card{background:white;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,0.15);padding:12px;margin-bottom:12px;}
+.btn-primary{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;}
+.btn-ghost{background:transparent;border:1px solid rgba(0,91,181,0.3);padding:8px 12px;border-radius:10px;color:#0b3a75;cursor:pointer;}
+.list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg,#07102a,#0b1b35);margin-bottom:8px;color:white;}
+.small-btn{padding:6px 10px;border-radius:8px;border:none;font-weight:700;cursor:pointer;}
+.btn-delete{background:#e63946;color:white;}
+.btn-edit{background:#ffd166;color:#0b1b2f;}
+
+/* BOTTOM NAV 1XBET */
+.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:70px;display:flex;justify-content:space-around;align-items:center;gap:5px;background:#0a76db;border-top:2px solid #005bb5;}
+.nav-item{flex:1;text-align:center;color:white;font-weight:700;font-size:0.85rem;cursor:pointer;padding:8px 4px;transition:all 0.12s;}
+.nav-item.active{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);border-radius:8px;}
+
+/* ADMIN ACTUALITÉS */
+#adminBtn{position:absolute;top:10px;right:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;}
+#adminForm{display:none;margin-top:10px;padding:10px;border:1px solid #ccc;border-radius:8px;}
+#adminForm input,#adminForm textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:1px solid #ccc;}
+#adminForm button{background:#0077e6;color:white;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;}
+#addNewsBtnContainer{margin-top:10px;display:none;text-align:center;}
+#addNewsBtnContainer button{background:#1da3ff;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:bold;}
+.news-item{background:white;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:10px;margin-bottom:12px;overflow:hidden;}
+.news-item img{float:right;margin-left:10px;width:100px;height:auto;border-radius:5px;}
+.news-item::after{content:"";display:block;clear:both;}
+.news-item .source{font-size:12px;color:gray;margin-bottom:5px;}
+.news-item .title{font-size:16px;font-weight:bold;color:#1a0dab;margin-bottom:5px;}
+.news-item .description{font-size:14px;margin-bottom:5px;}
+.news-item .time{font-size:12px;color:gray;margin-bottom:5px;}
 </style>
 </head>
 <body>
 
-<div class="container">
-    <h1 style="text-align:center;">ACTUALITÉS</h1>
+<main>
+
+<!-- PAGE ACTUALITÉS -->
+<div id="panel-actu" class="panel" style="display:block; position:relative;">
+    <button class="btn-back" style="display:none;" onclick="goBack('panel-actu')">← Retour</button>
+    <h1>ACTUALITÉS</h1>
     <button id="adminBtn">Admin</button>
 
     <div id="adminForm">
@@ -79,60 +70,168 @@
         </div>
     </div>
 
-    <div id="newsList">
-        <!-- Les actualités s'affichent ici -->
+    <div id="addNewsBtnContainer">
+        <button id="showAddFormBtn">Ajouter une actualité</button>
+    </div>
+
+    <div id="newsList"></div>
+</div>
+
+<!-- PAGE PROFIL -->
+<div id="panel-profil" class="panel" style="display:none;position:relative;">
+    <button class="btn-back" onclick="goBack('panel-profil')">← Retour</button>
+    <h1>Profil</h1>
+    <div class="card">
+      <strong>Nom du club :</strong> Légende FC<br>
+      <strong>Ville :</strong> Abidjan<br>
+      <strong>Entraîneur :</strong> M. Koné<br>
+      <strong>Année de création :</strong> 2020
     </div>
 </div>
 
+<!-- PAGE BUTEURS -->
+<div id="panel-buteurs" class="panel" style="display:none;position:relative;">
+    <button class="btn-back" onclick="goBack('panel-buteurs')">← Retour</button>
+    <h1>Buteurs</h1>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-primary" id="openAddButeur">+ Ajouter buteur</button>
+      <button class="btn-ghost" id="sortButeursBtn">Trier par buts</button>
+    </div>
+    <div id="buteursList"></div>
+</div>
+
+<!-- PAGE MATCHS -->
+<div id="panel-matchs" class="panel" style="display:none;position:relative;">
+    <button class="btn-back" onclick="goBack('panel-matchs')">← Retour</button>
+    <h1>Matchs</h1>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-primary" id="openAddMatch">+ Ajouter match</button>
+    </div>
+    <div id="matchesList"></div>
+</div>
+
+<!-- PAGE FANS -->
+<div id="panel-fans" class="panel" style="display:none;position:relative;">
+    <button class="btn-back" onclick="goBack('panel-fans')">← Retour</button>
+    <h1>Fans</h1>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <button class="btn-primary" id="openAddComment">+ Ajouter commentaire</button>
+    </div>
+    <div id="fansList"></div>
+</div>
+
+</main>
+
+<!-- MENU BAS -->
+<nav class="bottom-nav">
+  <div class="nav-item active" data-target="panel-actu">Actu</div>
+  <div class="nav-item" data-target="panel-profil">Profil</div>
+  <div class="nav-item" data-target="panel-buteurs">Buteurs</div>
+  <div class="nav-item" data-target="panel-matchs">Matchs</div>
+  <div class="nav-item" data-target="panel-fans">Fans</div>
+</nav>
+
 <script>
-    const ADMIN_CODE="5525";
-    const adminBtn=document.getElementById("adminBtn");
-    const adminForm=document.getElementById("adminForm");
-    const passwordDiv=document.getElementById("passwordDiv");
-    const addNewsDiv=document.getElementById("addNewsDiv");
-    const checkPassword=document.getElementById("checkPassword");
-    const addNewsBtn=document.getElementById("addNewsBtn");
-    const newsList=document.getElementById("newsList");
+const navItems=document.querySelectorAll('.nav-item');
+const panels=document.querySelectorAll('.panel');
 
-    adminBtn.addEventListener("click",()=>{adminForm.style.display="block";});
-
-    checkPassword.addEventListener("click",()=>{
-        const pw=document.getElementById("adminPassword").value;
-        if(pw===ADMIN_CODE){
-            alert("Admin activé !");
-            passwordDiv.style.display="none";
-            addNewsDiv.style.display="block";
-        } else alert("Code incorrect !");
+navItems.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    panels.forEach(p=>p.style.display=(p.id===btn.dataset.target?'block':'none'));
+    navItems.forEach(n=>n.classList.toggle('active',n===btn));
+    panels.forEach(p=>{
+        const backBtn = p.querySelector('.btn-back');
+        if(backBtn){ backBtn.style.display=(p.id==='panel-actu'?'none':'block'); }
     });
+  });
+});
 
-    addNewsBtn.addEventListener("click",()=>{
-        const source=document.getElementById("source").value;
-        const title=document.getElementById("title").value;
-        const description=document.getElementById("description").value;
-        const image=document.getElementById("imageURL").value;
-        const time=document.getElementById("time").value;
+function goBack(panelId){
+    panels.forEach(p=>p.style.display=(p.id==='panel-actu'?'block':'none'));
+    navItems.forEach(n=>n.classList.toggle('active',n.dataset.target==='panel-actu'));
+}
 
-        if(!title || !description){ alert("Titre et description obligatoires."); return; }
+// ADMIN ACTUALITÉS
+const ADMIN_CODE="5525";
+const adminBtn=document.getElementById("adminBtn");
+const adminForm=document.getElementById("adminForm");
+const passwordDiv=document.getElementById("passwordDiv");
+const addNewsDiv=document.getElementById("addNewsDiv");
+const checkPassword=document.getElementById("checkPassword");
+const addNewsBtn=document.getElementById("addNewsBtn");
+const newsList=document.getElementById("newsList");
+const addNewsBtnContainer=document.getElementById("addNewsBtnContainer");
+const showAddFormBtn=document.getElementById("showAddFormBtn");
 
-        const newsItem=document.createElement("div");
-        newsItem.className="news-item";
-        newsItem.innerHTML=`${image?'<img class="thumbnail" src="'+image+'">':''}
-            <div class="source">${source}</div>
-            <div class="title">${title}</div>
-            <div class="description">${description}</div>
-            <div class="time">${time}</div>
-            <button onclick="this.parentElement.remove()" style="margin-top:8px;background:#e63946;color:white;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">Supprimer</button>
-        `;
-        newsList.prepend(newsItem);
+adminBtn.addEventListener("click",()=>{adminForm.style.display="block";});
+checkPassword.addEventListener("click",()=>{
+    const pw=document.getElementById("adminPassword").value;
+    if(pw===ADMIN_CODE){
+        alert("Admin activé !");
+        passwordDiv.style.display="none";
+        addNewsBtnContainer.style.display="block";
+    } else alert("Code incorrect !");
+});
 
-        // Réinitialiser
-        document.getElementById("source").value="";
-        document.getElementById("title").value="";
-        document.getElementById("description").value="";
-        document.getElementById("imageURL").value="";
-        document.getElementById("time").value="";
-    });
+showAddFormBtn.addEventListener("click",()=>{
+    addNewsDiv.style.display="block";
+    addNewsBtnContainer.style.display="none";
+});
+
+addNewsBtn.addEventListener("click",()=>{
+    const source=document.getElementById("source").value;
+    const title=document.getElementById("title").value;
+    const description=document.getElementById("description").value;
+    const image=document.getElementById("imageURL").value;
+    const time=document.getElementById("time").value;
+
+    if(!title || !description){ alert("Titre et description obligatoires."); return; }
+
+    const newsItem=document.createElement("div");
+    newsItem.className="news-item";
+    newsItem.innerHTML=`${image?'<img src="'+image+'">':''}
+        <div class="source">${source}</div>
+        <div class="title">${title}</div>
+        <div class="description">${description}</div>
+        <div class="time">${time}</div>
+        <button onclick="this.parentElement.remove()" style="margin-top:8px;background:#e63946;color:white;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">Supprimer</button>
+    `;
+    newsList.prepend(newsItem);
+
+    document.getElementById("source").value="";
+    document.getElementById("title").value="";
+    document.getElementById("description").value="";
+    document.getElementById("imageURL").value="";
+    document.getElementById("time").value="";
+
+    addNewsDiv.style.display="none";
+    addNewsBtnContainer.style.display="block";
+});
+
+// BUTEURS
+const buteursList=document.getElementById("buteursList");
+const openAddButeur=document.getElementById("openAddButeur");
+const sortButeursBtn=document.getElementById("sortButeursBtn");
+let buteurs=[{id:1,name:"Koné",goals:12},{id:2,name:"Traoré",goals:8}];
+function renderButeurs(){buteursList.innerHTML="";buteurs.forEach((b,i)=>{const el=document.createElement("div");el.className="list-item";el.innerHTML=`<div>#${i+1} ${b.name} (${b.goals} buts)</div><div><button class="small-btn btn-ghost edit">Modifier</button> <button class="small-btn btn-delete">Supprimer</button></div>`;el.querySelector(".btn-delete").addEventListener("click",()=>{buteurs=buteurs.filter(x=>x.id!==b.id);renderButeurs();});el.querySelector(".edit").addEventListener("click",()=>{const n=prompt("Nom :",b.name);const g=parseInt(prompt("Buts :",b.goals));if(n&&g>=0){b.name=n;b.goals=g;renderButeurs();}});buteursList.appendChild(el);});}
+openAddButeur.addEventListener("click",()=>{const n=prompt("Nom :");const g=parseInt(prompt("Buts :"));if(n&&g>=0){buteurs.push({id:Date.now(),name:n,goals:g});renderButeurs();}});
+sortButeursBtn.addEventListener("click",()=>{buteurs.sort((a,b)=>b.goals-a.goals);renderButeurs();});
+renderButeurs();
+
+// MATCHS
+const matchesList=document.getElementById("matchesList");
+const openAddMatch=document.getElementById("openAddMatch");
+let matches=[{id:1,team1:"Légende FC",team2:"Rival FC",date:"2025-11-20",status:"à venir"}];
+function renderMatches(){matchesList.innerHTML="";matches.forEach((m,i)=>{const el=document.createElement("div");el.className="list-item";el.innerHTML=`<div>${m.date} - ${m.team1} vs ${m.team2} (${m.status})</div><div><button class="small-btn btn-delete">Supprimer</button></div>`;el.querySelector(".btn-delete").addEventListener("click",()=>{matches=matches.filter(x=>x.id!==m.id);renderMatches();});matchesList.appendChild(el);});}
+openAddMatch.addEventListener("click",()=>{const t1=prompt("Équipe 1 :");const t2=prompt("Équipe 2 :");const dt=prompt("Date (YYYY-MM-DD) :");if(t1&&t2&&dt){matches.push({id:Date.now(),team1:t1,team2:t2,date:dt,status:"à venir"});renderMatches();}});renderMatches();
+
+// FANS
+const fansList=document.getElementById("fansList");
+const openAddComment=document.getElementById("openAddComment");
+let comments=[{id:1,text:"Allez Légende FC !"}];
+function renderFans(){fansList.innerHTML="";comments.forEach(c=>{const el=document.createElement("div");el.className="list-item";el.innerHTML=`<div>${c.text}</div><div><button class="small-btn btn-delete">Supprimer</button></div>`;el.querySelector(".btn-delete").addEventListener("click",()=>{comments=comments.filter(x=>x.id!==c.id);renderFans();});fansList.appendChild(el);});}
+openAddComment.addEventListener("click",()=>{const t=prompt("Commentaire :");if(t){comments.push({id:Date.now(),text:t});renderFans();}});renderFans();
 </script>
 
 </body>
-              </html>
+</html>
