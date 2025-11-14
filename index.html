@@ -12,11 +12,6 @@ h1{text-align:center;margin-bottom:20px;font-size:2rem;font-weight:900;}
 .btn-back{position:absolute;top:10px;left:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;z-index:200;}
 .card{background:white;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,0.15);padding:12px;margin-bottom:12px;}
 .btn-primary{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;}
-.btn-ghost{background:transparent;border:1px solid rgba(0,91,181,0.3);padding:8px 12px;border-radius:10px;color:#0b3a75;cursor:pointer;}
-.list-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border-radius:10px;background:linear-gradient(180deg,#07102a,#0b1b35);margin-bottom:8px;color:white;}
-.small-btn{padding:6px 10px;border-radius:8px;border:none;font-weight:700;cursor:pointer;}
-.btn-delete{background:#e63946;color:white;}
-.btn-edit{background:#ffd166;color:#0b1b2f;}
 .bottom-nav{position:fixed;left:0;right:0;bottom:0;height:70px;display:flex;justify-content:space-around;align-items:center;gap:5px;background:#0a76db;border-top:2px solid #005bb5;}
 .nav-item{flex:1;text-align:center;color:white;font-weight:700;font-size:0.85rem;cursor:pointer;padding:8px 4px;transition:all 0.12s;}
 .nav-item.active{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);border-radius:8px;}
@@ -34,25 +29,19 @@ h1{text-align:center;margin-bottom:20px;font-size:2rem;font-weight:900;}
 .news-item .description{font-size:14px;margin-bottom:5px;}
 .news-item .time{font-size:12px;color:gray;margin-bottom:5px;}
 
-/* PROFILS JOUEURS */
-.player-header{
-    width:100%;
-    background:rgba(0,0,0,0.45);
-    padding:20px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-    color:white;
-    font-family:Arial, sans-serif;
-    margin-bottom:16px; /* espace entre profils */
-}
-.player-photo{position:relative;width:70px;height:70px;border-radius:50%;overflow:hidden;}
-.player-photo img{width:100%;height:100%;object-fit:cover;}
-.player-photo .flag{position:absolute;bottom:-2px;right:-2px;width:28px;height:28px;border-radius:50%;border:2px solid white;}
-.player-info .player-name{font-size:20px;font-weight:bold;}
-.player-info .player-club{font-size:14px;opacity:0.9;}
-.player-info .player-country,.player-info .player-age{font-size:14px;opacity:0.85;}
+/* PROFILS JOUEURS EN GRILLE */
+.players-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
+.player-card{background:rgba(0,0,0,0.45);border-radius:20px;padding:15px;color:white;display:flex;flex-direction:column;align-items:center;}
+.player-card img{width:70px;height:70px;border-radius:50%;object-fit:cover;margin-bottom:8px;}
+.player-card .flag{width:28px;height:28px;border-radius:50%;border:2px solid white;margin-top:-20px;margin-left:40px;}
+.player-card .player-name{font-weight:bold;font-size:18px;margin-bottom:4px;}
+.player-card .player-club,.player-card .player-country,.player-card .player-age{font-size:14px;opacity:0.9;margin-bottom:2px;}
+
+/* BUTEURS TABLEAU */
+table{width:100%;border-collapse:collapse;margin-bottom:20px;background:white;border-radius:12px;overflow:hidden;}
+th,td{border:1px solid #ccc;padding:8px;text-align:center;}
+th{background:#1da3ff;color:white;}
+td input{width:60px;padding:4px;border-radius:4px;border:1px solid #ccc;text-align:center;}
 </style>
 </head>
 <body>
@@ -90,37 +79,31 @@ h1{text-align:center;margin-bottom:20px;font-size:2rem;font-weight:900;}
     <button class="btn-back" onclick="goBack('panel-profil')">← Retour</button>
     <h1>Profil Joueurs</h1>
     <button id="editPlayersBtn" style="display:none;background:#1da3ff;color:white;padding:8px 12px;border:none;border-radius:8px;margin-bottom:12px;cursor:pointer;">Modifier joueurs</button>
-    <div id="playersContainer" style="display:flex;flex-direction:column;gap:12px;">
-        <!-- 7 profils séparés -->
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Unai_Sim%C3%B3n_%28cropped%29.jpg" alt="Unai Simon"><img class="flag" src="https://flagcdn.com/w40/es.png" alt="Espagne"></div>
-            <div class="player-info"><div class="player-name">Unai Simon</div><div class="player-club">Athletic Bilbao · Goalkeeper</div><div class="player-country">Espagne</div><div class="player-age">Âge : 28 (11.06.1997)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Kylian_Mbapp%C3%A9_2022.jpg" alt="Kylian Mbappé"><img class="flag" src="https://flagcdn.com/w40/fr.png" alt="France"></div>
-            <div class="player-info"><div class="player-name">Kylian Mbappé</div><div class="player-club">Paris Saint-Germain · Forward</div><div class="player-country">France</div><div class="player-age">Âge : 26 (20.12.1998)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg" alt="Lionel Messi"><img class="flag" src="https://flagcdn.com/w40/ar.png" alt="Argentine"></div>
-            <div class="player-info"><div class="player-name">Lionel Messi</div><div class="player-club">Inter Miami · Forward</div><div class="player-country">Argentine</div><div class="player-age">Âge : 36 (24.06.1987)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Cristiano_Ronaldo_2021.jpg" alt="Cristiano Ronaldo"><img class="flag" src="https://flagcdn.com/w40/pt.png" alt="Portugal"></div>
-            <div class="player-info"><div class="player-name">Cristiano Ronaldo</div><div class="player-club">Al-Nassr · Forward</div><div class="player-country">Portugal</div><div class="player-age">Âge : 38 (05.02.1985)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Neymar_2018.jpg" alt="Neymar Jr"><img class="flag" src="https://flagcdn.com/w40/br.png" alt="Brésil"></div>
-            <div class="player-info"><div class="player-name">Neymar Jr</div><div class="player-club">Al-Hilal · Forward</div><div class="player-country">Brésil</div><div class="player-age">Âge : 31 (05.02.1992)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Marc-Andr%C3%A9_ter_Stegen_2019.jpg" alt="Ter Stegen"><img class="flag" src="https://flagcdn.com/w40/de.png" alt="Allemagne"></div>
-            <div class="player-info"><div class="player-name">Marc-André ter Stegen</div><div class="player-club">FC Barcelone · Goalkeeper</div><div class="player-country">Allemagne</div><div class="player-age">Âge : 31 (30.04.1992)</div></div>
-        </div>
-        <div class="player-header">
-            <div class="player-photo"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Erling_Haaland_2022.jpg" alt="Erling Haaland"><img class="flag" src="https://flagcdn.com/w40/no.png" alt="Norvège"></div>
-            <div class="player-info"><div class="player-name">Erling Haaland</div><div class="player-club">Manchester City · Forward</div><div class="player-country">Norvège</div><div class="player-age">Âge : 24 (21.07.2000)</div></div>
-        </div>
+    <div class="players-grid">
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Unai_Sim%C3%B3n_%28cropped%29.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/es.png') no-repeat center/cover;"></div><div class="player-name">Unai Simon</div><div class="player-club">Athletic Bilbao · Goalkeeper</div><div class="player-country">Espagne</div><div class="player-age">Âge : 28</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Kylian_Mbapp%C3%A9_2022.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/fr.png') no-repeat center/cover;"></div><div class="player-name">Kylian Mbappé</div><div class="player-club">Paris Saint-Germain · Forward</div><div class="player-country">France</div><div class="player-age">Âge : 26</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') no-repeat center/cover;"></div><div class="player-name">Lionel Messi</div><div class="player-club">Inter Miami · Forward</div><div class="player-country">Argentine</div><div class="player-age">Âge : 36</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Cristiano_Ronaldo_2021.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/pt.png') no-repeat center/cover;"></div><div class="player-name">Cristiano Ronaldo</div><div class="player-club">Al-Nassr · Forward</div><div class="player-country">Portugal</div><div class="player-age">Âge : 38</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Neymar_2018.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/br.png') no-repeat center/cover;"></div><div class="player-name">Neymar Jr</div><div class="player-club">Al-Hilal · Forward</div><div class="player-country">Brésil</div><div class="player-age">Âge : 31</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Marc-Andr%C3%A9_ter_Stegen_2019.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/de.png') no-repeat center/cover;"></div><div class="player-name">Marc-André ter Stegen</div><div class="player-club">FC Barcelone · Goalkeeper</div><div class="player-country">Allemagne</div><div class="player-age">Âge : 31</div></div>
+        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Erling_Haaland_2022.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/no.png') no-repeat center/cover;"></div><div class="player-name">Erling Haaland</div><div class="player-club">Manchester City · Forward</div><div class="player-country">Norvège</div><div class="player-age">Âge : 24</div></div>
     </div>
+</div>
+
+<!-- BUTEURS -->
+<div id="panel-buteurs" class="panel" style="display:none;position:relative;">
+    <button class="btn-back" onclick="goBack('panel-buteurs')">← Retour</button>
+    <h1>Buteurs</h1>
+    <table>
+        <tr><th>Joueur</th><th>Buts</th></tr>
+        <tr><td>Unai Simon</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Kylian Mbappé</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Lionel Messi</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Cristiano Ronaldo</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Neymar Jr</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Marc-André ter Stegen</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Erling Haaland</td><td><input type="number" min="0"></td></tr>
+    </table>
 </div>
 
 <!-- MENU BAS -->
@@ -182,7 +165,7 @@ addNewsBtn.addEventListener("click",()=>{
 
 // MODIFIER PROFILS
 editPlayersBtn.addEventListener("click",()=>{
-    const players=document.querySelectorAll(".player-header");
+    const players=document.querySelectorAll(".player-card");
     players.forEach(p=>{
         const nameEl=p.querySelector(".player-name");
         const clubEl=p.querySelector(".player-club");
@@ -191,15 +174,13 @@ editPlayersBtn.addEventListener("click",()=>{
         const newName=prompt("Nom :",nameEl.textContent);
         const newClub=prompt("Club & Poste :",clubEl.textContent);
         const newCountry=prompt("Pays :",countryEl.textContent);
-        const newAge=prompt("Âge & Date de naissance :",ageEl.textContent);
+        const newAge=prompt("Âge :",ageEl.textContent);
         if(newName) nameEl.textContent=newName;
         if(newClub) clubEl.textContent=newClub;
         if(newCountry) countryEl.textContent=newCountry;
         if(newAge) ageEl.textContent=newAge;
     });
 });
-
-// Ici ajouter JS Buteurs, Matchs, Fans si nécessaire…
 </script>
 
 </body>
