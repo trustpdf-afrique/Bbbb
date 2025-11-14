@@ -1,1 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualités Football</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+    .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        position: relative;
+    }
+    .source {
+        font-size: 12px;
+        color: gray;
+        margin-bottom: 5px;
+    }
+    .title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #1a0dab;
+        margin-bottom: 10px;
+    }
+    .description {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    .time {
+        font-size: 12px;
+        color: gray;
+    }
+    .thumbnail {
+        float: right;
+        margin-left: 10px;
+        width: 100px;
+        height: auto;
+        border-radius: 5px;
+    }
+    .news-item::after {
+        content: "";
+        display: block;
+        clear: both;
+    }
+    /* Bouton admin */
+    #adminBtn{position:absolute;top:10px;right:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;}
+    #adminForm{display:none;margin-top:10px;padding:10px;border:1px solid #ccc;border-radius:8px;}
+    #adminForm input, #adminForm textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:1px solid #ccc;}
+    #adminForm button{background:#0077e6;color:white;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;}
+</style>
+</head>
+<body>
 
+<div class="container">
+    <h1 style="text-align:center;">ACTUALITÉS</h1>
+    <button id="adminBtn">Admin</button>
+
+    <div id="adminForm">
+        <div id="passwordDiv">
+            <input type="password" id="adminPassword" placeholder="Code Admin">
+            <button id="checkPassword">Valider</button>
+        </div>
+        <div id="addNewsDiv" style="display:none;">
+            <input type="text" id="source" placeholder="Source">
+            <input type="text" id="title" placeholder="Titre">
+            <textarea id="description" placeholder="Description"></textarea>
+            <input type="text" id="imageURL" placeholder="URL de l'image">
+            <input type="text" id="time" placeholder="Temps (ex: il y a 2 semaines)">
+            <button id="addNewsBtn">Ajouter</button>
+        </div>
+    </div>
+
+    <div id="newsList">
+        <!-- Les actualités s'affichent ici -->
+    </div>
+</div>
+
+<script>
+    const ADMIN_CODE="5525";
+    const adminBtn=document.getElementById("adminBtn");
+    const adminForm=document.getElementById("adminForm");
+    const passwordDiv=document.getElementById("passwordDiv");
+    const addNewsDiv=document.getElementById("addNewsDiv");
+    const checkPassword=document.getElementById("checkPassword");
+    const addNewsBtn=document.getElementById("addNewsBtn");
+    const newsList=document.getElementById("newsList");
+
+    adminBtn.addEventListener("click",()=>{adminForm.style.display="block";});
+
+    checkPassword.addEventListener("click",()=>{
+        const pw=document.getElementById("adminPassword").value;
+        if(pw===ADMIN_CODE){
+            alert("Admin activé !");
+            passwordDiv.style.display="none";
+            addNewsDiv.style.display="block";
+        } else alert("Code incorrect !");
+    });
+
+    addNewsBtn.addEventListener("click",()=>{
+        const source=document.getElementById("source").value;
+        const title=document.getElementById("title").value;
+        const description=document.getElementById("description").value;
+        const image=document.getElementById("imageURL").value;
+        const time=document.getElementById("time").value;
+
+        if(!title || !description){ alert("Titre et description obligatoires."); return; }
+
+        const newsItem=document.createElement("div");
+        newsItem.className="news-item";
+        newsItem.innerHTML=`${image?'<img class="thumbnail" src="'+image+'">':''}
+            <div class="source">${source}</div>
+            <div class="title">${title}</div>
+            <div class="description">${description}</div>
+            <div class="time">${time}</div>
+            <button onclick="this.parentElement.remove()" style="margin-top:8px;background:#e63946;color:white;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">Supprimer</button>
+        `;
+        newsList.prepend(newsItem);
+
+        // Réinitialiser
+        document.getElementById("source").value="";
+        document.getElementById("title").value="";
+        document.getElementById("description").value="";
+        document.getElementById("imageURL").value="";
+        document.getElementById("time").value="";
+    });
+</script>
+
+</body>
+              </html>
