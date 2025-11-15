@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Club App</title>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:Arial,sans-serif;background:#f5f5f5;color:#0f1724;}
@@ -11,177 +12,415 @@ main{padding:20px;padding-bottom:100px;min-height:100vh;position:relative;}
 h1{text-align:center;margin-bottom:20px;font-size:2rem;font-weight:900;}
 .btn-back{position:absolute;top:10px;left:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;z-index:200;}
 .card{background:white;border-radius:12px;box-shadow:0 6px 14px rgba(0,0,0,0.15);padding:12px;margin-bottom:12px;}
-.btn-primary{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);color:white;border:none;padding:10px 14px;border-radius:10px;font-weight:700;cursor:pointer;}
-.bottom-nav{position:fixed;left:0;right:0;bottom:0;height:70px;display:flex;justify-content:space-around;align-items:center;gap:5px;background:#0a76db;border-top:2px solid #005bb5;}
-.nav-item{flex:1;text-align:center;color:white;font-weight:700;font-size:0.85rem;cursor:pointer;padding:8px 4px;transition:all 0.12s;}
-.nav-item.active{background:linear-gradient(180deg,#1da3ff 0%,#0077e6 100%);border-radius:8px;}
-#adminBtn{position:absolute;top:10px;right:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;}
-#adminForm{display:none;margin-top:10px;padding:10px;border:1px solid #ccc;border-radius:8px;}
-#adminForm input,#adminForm textarea{width:100%;padding:8px;margin-bottom:8px;border-radius:5px;border:1px solid #ccc;}
-#adminForm button{background:#0077e6;color:white;border:none;padding:8px 12px;border-radius:5px;cursor:pointer;}
-#addNewsBtnContainer{margin-top:10px;display:none;text-align:center;}
-#addNewsBtnContainer button{background:#1da3ff;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;font-weight:bold;}
-.news-item{background:white;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,0.1);padding:10px;margin-bottom:12px;overflow:hidden;}
-.news-item img{float:right;margin-left:10px;width:100px;height:auto;border-radius:5px;}
-.news-item::after{content:"";display:block;clear:both;}
-.news-item .source{font-size:12px;color:gray;margin-bottom:5px;}
-.news-item .title{font-size:16px;font-weight:bold;color:#1a0dab;margin-bottom:5px;}
-.news-item .description{font-size:14px;margin-bottom:5px;}
-.news-item .time{font-size:12px;color:gray;margin-bottom:5px;}
 
-/* PROFILS JOUEURS EN GRILLE */
-.players-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;}
-.player-card{background:rgba(0,0,0,0.45);border-radius:20px;padding:15px;color:white;display:flex;flex-direction:column;align-items:center;}
-.player-card img{width:70px;height:70px;border-radius:50%;object-fit:cover;margin-bottom:8px;}
-.player-card .flag{width:28px;height:28px;border-radius:50%;border:2px solid white;margin-top:-20px;margin-left:40px;}
-.player-card .player-name{font-weight:bold;font-size:18px;margin-bottom:4px;}
-.player-card .player-club,.player-card .player-country,.player-card .player-age{font-size:14px;opacity:0.9;margin-bottom:2px;}
+.bottom-nav{
+  position:fixed;left:0;right:0;bottom:0;height:70px;
+  display:flex;justify-content:space-around;align-items:center;
+  background:#0a76db;border-top:2px solid #005bb5;
+}
+.nav-item{
+  flex:1;text-align:center;color:white;font-weight:700;
+  cursor:pointer;padding:8px 4px;font-size:0.85rem;
+}
+.nav-item.active{
+  background:linear-gradient(180deg,#1da3ff,#0077e6);
+  border-radius:8px;
+}
 
-/* BUTEURS TABLEAU */
-table{width:100%;border-collapse:collapse;margin-bottom:20px;background:white;border-radius:12px;overflow:hidden;}
+/******** ACTUALITÉS *******/
+.news-item{
+  background:white;border-radius:10px;
+  padding:10px;margin-bottom:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+.news-item img{
+  float:right;margin-left:10px;width:100px;
+  height:auto;border-radius:5px;
+}
+.news-item:after{content:"";display:block;clear:both;}
+.news-item .source{font-size:12px;color:gray;}
+.news-item .title{font-size:16px;font-weight:bold;color:#1a0dab;}
+.news-item .description{font-size:14px;}
+.news-item .time{font-size:12px;color:gray;}
+
+/********* JOUEURS *********/
+.players-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:16px;
+}
+.player-card{
+  background:rgba(0,0,0,0.45);border-radius:20px;
+  padding:15px;color:white;text-align:center;
+}
+.player-card img{
+  width:70px;height:70px;border-radius:50%;
+}
+.flag{
+  width:28px;height:28px;border-radius:50%;
+  margin-top:-20px;margin-left:40px;border:2px solid white;
+}
+.player-name{font-weight:bold;font-size:18px;margin-top:6px;}
+
+/********* BUTEURS *********/
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;}
 th,td{border:1px solid #ccc;padding:8px;text-align:center;}
 th{background:#1da3ff;color:white;}
-td input{width:60px;padding:4px;border-radius:4px;border:1px solid #ccc;text-align:center;}
+td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px solid #ccc;}
+
 </style>
 </head>
+
 <body>
 
 <main>
-<!-- ACTUALITÉS -->
+
+<!-- =======================
+       PAGE ACTUALITÉS
+======================== -->
 <div id="panel-actu" class="panel" style="display:block; position:relative;">
-    <button class="btn-back" style="display:none;" onclick="goBack('panel-actu')">← Retour</button>
     <h1>ACTUALITÉS</h1>
-    <button id="adminBtn">Admin</button>
 
-    <div id="adminForm">
-        <div id="passwordDiv">
-            <input type="password" id="adminPassword" placeholder="Code Admin">
-            <button id="checkPassword">Valider</button>
-        </div>
-        <div id="addNewsDiv" style="display:none;">
-            <input type="text" id="source" placeholder="Source">
-            <input type="text" id="title" placeholder="Titre">
-            <textarea id="description" placeholder="Description"></textarea>
-            <input type="text" id="imageURL" placeholder="URL de l'image">
-            <input type="text" id="time" placeholder="Temps (ex: il y a 2 semaines)">
-            <button id="addNewsBtn">Ajouter</button>
-        </div>
+    <button id="adminBtn" 
+      style="position:absolute;top:10px;right:10px;background:#222;color:white;font-size:12px;padding:6px 10px;border:none;border-radius:6px;opacity:0.7;cursor:pointer;">
+      Admin
+    </button>
+
+    <div id="adminForm" style="display:none;margin-top:15px;">
+        <input type="password" id="adminPassword" placeholder="Code Admin"
+               style="width:100%;padding:8px;border-radius:6px;border:1px solid #ccc;">
+        <button id="checkPassword" 
+                style="background:#0a76db;color:white;border:none;padding:10px;width:100%;margin-top:6px;border-radius:8px;">
+            Valider
+        </button>
     </div>
 
-    <div id="addNewsBtnContainer">
-        <button id="showAddFormBtn">Ajouter une actualité</button>
+    <div id="addNewsBtnContainer" style="display:none;text-align:center;margin-bottom:10px;">
+        <button id="showAddFormBtn"
+                style="background:#1da3ff;color:white;padding:10px 14px;border:none;border-radius:8px;font-weight:bold;">
+            Ajouter une actualité
+        </button>
     </div>
-    <div id="newsList"></div>
+
+    <div id="addNewsDiv" style="display:none;">
+        <input id="source" placeholder="Source" style="width:100%;padding:8px;margin-top:6px;">
+        <input id="title" placeholder="Titre" style="width:100%;padding:8px;margin-top:6px;">
+        <textarea id="description" placeholder="Description" style="width:100%;padding:8px;margin-top:6px;"></textarea>
+        <input id="imageURL" placeholder="URL Image" style="width:100%;padding:8px;margin-top:6px;">
+        <input id="time" placeholder="Temps (ex : il y a 2h)" style="width:100%;padding:8px;margin-top:6px;">
+        <button id="addNewsBtn"
+                style="background:#0a76db;color:white;border:none;padding:10px;width:100%;margin-top:8px;border-radius:8px;">
+            Ajouter
+        </button>
+    </div>
+
+    <div id="newsList" style="margin-top:15px;"></div>
 </div>
 
-<!-- PROFILS -->
-<div id="panel-profil" class="panel" style="display:none;position:relative;">
+<!-- =======================
+       PROFILS
+======================== -->
+<div id="panel-profil" class="panel" style="display:none; position:relative;">
     <button class="btn-back" onclick="goBack('panel-profil')">← Retour</button>
     <h1>Profil Joueurs</h1>
-    <button id="editPlayersBtn" style="display:none;background:#1da3ff;color:white;padding:8px 12px;border:none;border-radius:8px;margin-bottom:12px;cursor:pointer;">Modifier joueurs</button>
+
+    <button id="editPlayersBtn" 
+            style="display:none;background:#1da3ff;color:white;padding:10px 14px;border:none;border-radius:10px;margin-bottom:12px;cursor:pointer;">
+        Modifier joueurs
+    </button>
+
     <div class="players-grid">
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Unai_Sim%C3%B3n_%28cropped%29.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/es.png') no-repeat center/cover;"></div><div class="player-name">Unai Simon</div><div class="player-club">Athletic Bilbao · Goalkeeper</div><div class="player-country">Espagne</div><div class="player-age">Âge : 28</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Kylian_Mbapp%C3%A9_2022.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/fr.png') no-repeat center/cover;"></div><div class="player-name">Kylian Mbappé</div><div class="player-club">Paris Saint-Germain · Forward</div><div class="player-country">France</div><div class="player-age">Âge : 26</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') no-repeat center/cover;"></div><div class="player-name">Lionel Messi</div><div class="player-club">Inter Miami · Forward</div><div class="player-country">Argentine</div><div class="player-age">Âge : 36</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Cristiano_Ronaldo_2021.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/pt.png') no-repeat center/cover;"></div><div class="player-name">Cristiano Ronaldo</div><div class="player-club">Al-Nassr · Forward</div><div class="player-country">Portugal</div><div class="player-age">Âge : 38</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/0/00/Neymar_2018.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/br.png') no-repeat center/cover;"></div><div class="player-name">Neymar Jr</div><div class="player-club">Al-Hilal · Forward</div><div class="player-country">Brésil</div><div class="player-age">Âge : 31</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/1/12/Marc-Andr%C3%A9_ter_Stegen_2019.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/de.png') no-repeat center/cover;"></div><div class="player-name">Marc-André ter Stegen</div><div class="player-club">FC Barcelone · Goalkeeper</div><div class="player-country">Allemagne</div><div class="player-age">Âge : 31</div></div>
-        <div class="player-card"><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Erling_Haaland_2022.jpg"><div class="flag" style="background:url('https://flagcdn.com/w40/no.png') no-repeat center/cover;"></div><div class="player-name">Erling Haaland</div><div class="player-club">Manchester City · Forward</div><div class="player-country">Norvège</div><div class="player-age">Âge : 24</div></div>
+        <div class="player-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Unai_Sim%C3%B3n_%28cropped%29.jpg">
+            <div class="flag" style="background:url('https://flagcdn.com/w40/es.png') center/cover;"></div>
+            <div class="player-name">Unai Simon</div>
+            <div class="player-club">Athletic Bilbao · GK</div>
+            <div class="player-country">Espagne</div>
+            <div class="player-age">Âge : 28</div>
+        </div>
+
+        <div class="player-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Kylian_Mbapp%C3%A9_2022.jpg">
+            <div class="flag" style="background:url('https://flagcdn.com/w40/fr.png') center/cover;"></div>
+            <div class="player-name">Kylian Mbappé</div>
+            <div class="player-club">Paris SG · Attaquant</div>
+            <div class="player-country">France</div>
+            <div class="player-age">Âge : 26</div>
+        </div>
+
+        <div class="player-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg">
+            <div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') center/cover;"></div>
+            <div class="player-name">Lionel Messi</div>
+            <div class="player-club">Inter Miami · Attaquant</div>
+            <div class="player-country">Argentine</div>
+            <div class="player-age">Âge : 36</div>
+        </div>
     </div>
 </div>
 
-<!-- BUTEURS -->
-<div id="panel-buteurs" class="panel" style="display:none;position:relative;">
+<!-- =======================
+       BUTEURS
+======================== -->
+<div id="panel-buteurs" class="panel" style="display:none; position:relative;">
     <button class="btn-back" onclick="goBack('panel-buteurs')">← Retour</button>
     <h1>Buteurs</h1>
+
     <table>
         <tr><th>Joueur</th><th>Buts</th></tr>
-        <tr><td>Unai Simon</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Kylian Mbappé</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Lionel Messi</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Cristiano Ronaldo</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Neymar Jr</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Marc-André ter Stegen</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Erling Haaland</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Mbappé</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Messi</td><td><input type="number" min="0"></td></tr>
+        <tr><td>Ronaldo</td><td><input type="number" min="0"></td></tr>
     </table>
 </div>
 
-<!-- MENU BAS -->
+<!-- =======================
+       MATCHS
+======================== -->
+<div id="panel-matchs" class="panel" style="display:none; position:relative;">
+    <button class="btn-back" onclick="goBack('panel-matchs')">← Retour</button>
+    <h1>Matchs</h1>
+
+    <button id="addMatchBtn" style="display:none;background:#1da3ff;color:white;padding:10px 14px;border:none;border-radius:10px;margin-bottom:12px;">
+        Ajouter un match
+    </button>
+
+    <div id="matchsList"></div>
+</div>
+
+<!-- =======================
+       MODAL MATCH
+======================== -->
+<div id="matchModal" style="
+    display:none; position:fixed; top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,0.5); padding:20px;
+">
+    <div style="background:white;padding:15px;border-radius:12px;max-width:350px;margin:40px auto;">
+        <h3>Ajouter un Match</h3>
+        <input id="matchTeam" placeholder="Équipe A vs Équipe B" style="width:100%;padding:8px;margin-top:8px;">
+        <input id="matchDate" placeholder="Date" style="width:100%;padding:8px;margin-top:8px;">
+        <input id="matchHour" placeholder="Heure" style="width:100%;padding:8px;margin-top:8px;">
+        <input id="matchStadium" placeholder="Stade" style="width:100%;padding:8px;margin-top:8px;">
+
+        <button id="saveMatchBtn"
+                style="background:#0a76db;color:white;width:100%;padding:10px;margin-top:10px;border:none;border-radius:8px;">
+            Ajouter
+        </button>
+
+        <button onclick="document.getElementById('matchModal').style.display='none'"
+                style="margin-top:10px;width:100%;padding:8px;border:none;background:#ccc;border-radius:8px;">
+            Annuler
+        </button>
+    </div>
+</div>
+
+</main>
+
+<!-- =======================
+       NAVIGATION BAS
+======================== -->
 <nav class="bottom-nav">
   <div class="nav-item active" data-target="panel-actu">Actu</div>
   <div class="nav-item" data-target="panel-profil">Profil</div>
   <div class="nav-item" data-target="panel-buteurs">Buteurs</div>
   <div class="nav-item" data-target="panel-matchs">Matchs</div>
-  <div class="nav-item" data-target="panel-fans">Fans</div>
 </nav>
 
+<!-- =======================
+       SCRIPT COMPLET
+======================== -->
 <script>
-// NAVIGATION MENU BAS
+
+/******** NAVIGATION ********/
 const navItems=document.querySelectorAll('.nav-item');
 const panels=document.querySelectorAll('.panel');
-navItems.forEach(btn=>{btn.addEventListener('click',()=>{panels.forEach(p=>p.style.display=(p.id===btn.dataset.target?'block':'none'));navItems.forEach(n=>n.classList.toggle('active',n===btn));panels.forEach(p=>{const backBtn=p.querySelector('.btn-back');if(backBtn){backBtn.style.display=(p.id==='panel-actu'?'none':'block');}});});});
-function goBack(panelId){panels.forEach(p=>p.style.display=(p.id==='panel-actu'?'block':'none'));navItems.forEach(n=>n.classList.toggle('active',n.dataset.target==='panel-actu'));}
 
-// ADMIN ACTUALITÉS
-const ADMIN_CODE="5525";
-const adminBtn=document.getElementById("adminBtn");
-const adminForm=document.getElementById("adminForm");
-const passwordDiv=document.getElementById("passwordDiv");
-const addNewsDiv=document.getElementById("addNewsDiv");
-const checkPassword=document.getElementById("checkPassword");
-const addNewsBtn=document.getElementById("addNewsBtn");
-const newsList=document.getElementById("newsList");
-const addNewsBtnContainer=document.getElementById("addNewsBtnContainer");
-const showAddFormBtn=document.getElementById("showAddFormBtn");
-const editPlayersBtn=document.getElementById("editPlayersBtn");
-
-adminBtn.addEventListener("click",()=>{adminForm.style.display="block";});
-checkPassword.addEventListener("click",()=>{
-    const pw=document.getElementById("adminPassword").value;
-    if(pw===ADMIN_CODE){
-        alert("Admin activé !");
-        passwordDiv.style.display="none";
-        addNewsBtnContainer.style.display="block";
-        editPlayersBtn.style.display="block";
-    } else alert("Code incorrect !");
-});
-showAddFormBtn.addEventListener("click",()=>{addNewsDiv.style.display="block";addNewsBtnContainer.style.display="none";});
-addNewsBtn.addEventListener("click",()=>{
-    const source=document.getElementById("source").value;
-    const title=document.getElementById("title").value;
-    const description=document.getElementById("description").value;
-    const image=document.getElementById("imageURL").value;
-    const time=document.getElementById("time").value;
-    if(!title || !description){ alert("Titre et description obligatoires."); return; }
-    const newsItem=document.createElement("div");
-    newsItem.className="news-item";
-    newsItem.innerHTML=`${image?'<img src="'+image+'">':''}<div class="source">${source}</div><div class="title">${title}</div><div class="description">${description}</div><div class="time">${time}</div><button onclick="this.parentElement.remove()" style="margin-top:8px;background:#e63946;color:white;border:none;padding:4px 8px;border-radius:5px;cursor:pointer;">Supprimer</button>`;
-    newsList.prepend(newsItem);
-    document.getElementById("source").value="";document.getElementById("title").value="";
-    document.getElementById("description").value="";document.getElementById("imageURL").value="";
-    document.getElementById("time").value="";
-    addNewsDiv.style.display="none";addNewsBtnContainer.style.display="block";
+navItems.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    panels.forEach(p=>p.style.display=(p.id===btn.dataset.target?'block':'none'));
+    navItems.forEach(n=>n.classList.toggle('active',n===btn));
+  });
 });
 
-// MODIFIER PROFILS
-editPlayersBtn.addEventListener("click",()=>{
-    const players=document.querySelectorAll(".player-card");
-    players.forEach(p=>{
-        const nameEl=p.querySelector(".player-name");
-        const clubEl=p.querySelector(".player-club");
-        const countryEl=p.querySelector(".player-country");
-        const ageEl=p.querySelector(".player-age");
-        const newName=prompt("Nom :",nameEl.textContent);
-        const newClub=prompt("Club & Poste :",clubEl.textContent);
-        const newCountry=prompt("Pays :",countryEl.textContent);
-        const newAge=prompt("Âge :",ageEl.textContent);
-        if(newName) nameEl.textContent=newName;
-        if(newClub) clubEl.textContent=newClub;
-        if(newCountry) countryEl.textContent=newCountry;
-        if(newAge) ageEl.textContent=newAge;
+function goBack(){
+  panels.forEach(p=>p.style.display="none");
+  document.getElementById("panel-actu").style.display="block";
+  navItems.forEach(n=>n.classList.toggle('active', n.dataset.target==="panel-actu"));
+}
+
+/******** ADMIN GLOBAL ********/
+let adminActive = false;
+
+function activateAdmin(){
+    adminActive = true;
+    localStorage.setItem("admin","on");
+
+    document.getElementById("addNewsBtnContainer").style.display = "block";
+    document.getElementById("editPlayersBtn").style.display = "block";
+    document.getElementById("addMatchBtn").style.display = "block";
+}
+
+function restoreAdmin(){
+    if(localStorage.getItem("admin")==="on"){
+        activateAdmin();
+    }
+}
+restoreAdmin();
+
+/******** ADMIN LOGIN ********/
+document.getElementById("adminBtn").onclick = ()=>{
+    document.getElementById("adminForm").style.display="block";
+};
+
+document.getElementById("checkPassword").onclick = ()=>{
+    if(document.getElementById("adminPassword").value==="5525"){
+        alert("Mode Admin activé !");
+        activateAdmin();
+        document.getElementById("adminForm").style.display="none";
+    } else {
+        alert("Code incorrect !");
+    }
+};
+
+/******** ACTUALITÉS + SAUVEGARDE ********/
+let news = JSON.parse(localStorage.getItem("news")) || [];
+
+function displayNews(){
+    const list=document.getElementById("newsList");
+    list.innerHTML="";
+
+    news.forEach((n,i)=>{
+        let div=document.createElement("div");
+        div.className="news-item";
+
+        div.innerHTML=`
+            ${n.image?`<img src="${n.image}">`:""}
+            <div class="source">${n.source}</div>
+            <div class="title">${n.title}</div>
+            <div class="description">${n.description}</div>
+            <div class="time">${n.time}</div>
+            ${adminActive ? 
+                `<button onclick="deleteNews(${i})"
+                     style="background:#e63946;color:white;padding:4px 8px;border:none;border-radius:6px;margin-top:6px;">
+                     Supprimer
+                 </button>`
+                 : ""}
+        `;
+
+        list.prepend(div);
     });
-});
+}
+displayNews();
+
+document.getElementById("showAddFormBtn").onclick = ()=>{
+    document.getElementById("addNewsDiv").style.display="block";
+    document.getElementById("addNewsBtnContainer").style.display="none";
+};
+
+document.getElementById("addNewsBtn").onclick = ()=>{
+
+    let n={
+        source:source.value,
+        title:title.value,
+        description:description.value,
+        image:imageURL.value,
+        time:time.value
+    };
+
+    news.push(n);
+    localStorage.setItem("news",JSON.stringify(news));
+    displayNews();
+
+    source.value=title.value=description.value=imageURL.value=time.value="";
+    document.getElementById("addNewsDiv").style.display="none";
+    document.getElementById("addNewsBtnContainer").style.display="block";
+};
+
+function deleteNews(i){
+    news.splice(i,1);
+    localStorage.setItem("news",JSON.stringify(news));
+    displayNews();
+}
+
+/******** JOUEURS (MODIFICATION ADMIN) ********/
+document.getElementById("editPlayersBtn").onclick = ()=>{
+    const cards=document.querySelectorAll(".player-card");
+
+    cards.forEach(c=>{
+        let name=c.querySelector(".player-name");
+        let club=c.querySelector(".player-club");
+        let country=c.querySelector(".player-country");
+        let age=c.querySelector(".player-age");
+
+        let newName=prompt("Nom :",name.textContent);
+        if(newName) name.textContent=newName;
+
+        let newClub=prompt("Club et poste :",club.textContent);
+        if(newClub) club.textContent=newClub;
+
+        let newCountry=prompt("Pays :",country.textContent);
+        if(newCountry) country.textContent=newCountry;
+
+        let newAge=prompt("Âge :",age.textContent);
+        if(newAge) age.textContent=newAge;
+    });
+};
+
+/******** MATCHS + SAUVEGARDE ********/
+let matchs = JSON.parse(localStorage.getItem("matchs")) || [];
+
+function displayMatchs(){
+    const container=document.getElementById("matchsList");
+    container.innerHTML="";
+
+    matchs.forEach((m,i)=>{
+        let card=document.createElement("div");
+        card.className="card";
+
+        card.innerHTML=`
+            <h3>${m.teams}</h3>
+            <p>Date : ${m.date}</p>
+            <p>Heure : ${m.hour}</p>
+            <p>Stade : ${m.stadium}</p>
+            <p style="color:#0a76db;font-weight:bold;margin-top:6px;">À venir</p>
+            ${adminActive?`
+                <button onclick="deleteMatch(${i})"
+                        style="background:#e63946;color:white;padding:4px 8px;border:none;border-radius:6px;margin-top:6px;">
+                    Supprimer
+                </button>`:""}
+        `;
+        container.appendChild(card);
+    });
+}
+displayMatchs();
+
+// ouvrir modal
+document.getElementById("addMatchBtn").onclick = ()=>{
+    document.getElementById("matchModal").style.display="block";
+};
+
+// sauvegarder
+document.getElementById("saveMatchBtn").onclick = ()=>{
+    let m={
+        teams:matchTeam.value,
+        date:matchDate.value,
+        hour:matchHour.value,
+        stadium:matchStadium.value
+    };
+
+    matchs.push(m);
+    localStorage.setItem("matchs",JSON.stringify(matchs));
+    displayMatchs();
+    document.getElementById("matchModal").style.display="none";
+};
+
+// supprimer
+function deleteMatch(i){
+    matchs.splice(i,1);
+    localStorage.setItem("matchs",JSON.stringify(matchs));
+    displayMatchs();
+}
+
 </script>
 
 </body>
-  </html>
+</html>
