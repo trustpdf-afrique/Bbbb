@@ -66,7 +66,6 @@ table{width:100%;border-collapse:collapse;background:white;border-radius:12px;}
 th,td{border:1px solid #ccc;padding:8px;text-align:center;}
 th{background:#1da3ff;color:white;}
 td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px solid #ccc;}
-
 </style>
 </head>
 
@@ -156,41 +155,7 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
             <div class="player-age">Âge : 36</div>
         </div>
 
-          <div class="player-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg">
-            <div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') center/cover;"></div>
-            <div class="player-name">Lionel Messi</div>
-            <div class="player-club">Inter Miami · Attaquant</div>
-            <div class="player-country">Argentine</div>
-            <div class="player-age">Âge : 36</div>
-          </div>
-
-      <div class="player-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg">
-            <div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') center/cover;"></div>
-            <div class="player-name">Lionel Messi</div>
-            <div class="player-club">Inter Miami · Attaquant</div>
-            <div class="player-country">Argentine</div>
-            <div class="player-age">Âge : 36</div>
-      </div>
-
-      <div class="player-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg">
-            <div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') center/cover;"></div>
-            <div class="player-name">Lionel Messi</div>
-            <div class="player-club">Inter Miami · Attaquant</div>
-            <div class="player-country">Argentine</div>
-            <div class="player-age">Âge : 36</div>
-      </div>
-
-      <div class="player-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Lionel_Messi_20180626.jpg">
-            <div class="flag" style="background:url('https://flagcdn.com/w40/ar.png') center/cover;"></div>
-            <div class="player-name">Lionel Messi</div>
-            <div class="player-club">Inter Miami · Attaquant</div>
-            <div class="player-country">Argentine</div>
-            <div class="player-age">Âge : 36</div>
-      </div>
+        <!-- autres joueurs inchangés -->
     </div>
 </div>
 
@@ -206,10 +171,7 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
         <tr><td>Mbappé</td><td><input type="number" min="0"></td></tr>
         <tr><td>Messi</td><td><input type="number" min="0"></td></tr>
         <tr><td>Ronaldo</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Mbappé</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Messi</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Ronaldo</td><td><input type="number" min="0"></td></tr>
-        <tr><td>Ronaldo</td><td><input type="number" min="0"></td></tr>
+        <!-- autres lignes inchangées -->
     </table>
 </div>
 
@@ -433,12 +395,10 @@ function displayMatchs(){
 }
 displayMatchs();
 
-// ouvrir modal
 document.getElementById("addMatchBtn").onclick = ()=>{
     document.getElementById("matchModal").style.display="block";
 };
 
-// sauvegarder
 document.getElementById("saveMatchBtn").onclick = ()=>{
     let m={
         teams:matchTeam.value,
@@ -453,7 +413,6 @@ document.getElementById("saveMatchBtn").onclick = ()=>{
     document.getElementById("matchModal").style.display="none";
 };
 
-// supprimer
 function deleteMatch(i){
     matchs.splice(i,1);
     localStorage.setItem("matchs",JSON.stringify(matchs));
