@@ -52,6 +52,7 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
 .score-match{font-weight:700;font-size:22px;min-width:72px;text-align:center}
 .meta{font-size:13px;color:var(--muted);text-align:center;margin-bottom:6px}
 #addMatchRecentBtn{padding:10px 14px;border:0;border-radius:10px;background:#0b8a7f;color:white;font-size:15px;font-weight:600;cursor:pointer;width:100%;margin-top:10px;display:none;}
+#editButeursBtn{background:#1da3ff;color:white;padding:6px 10px;border:none;border-radius:8px;margin-bottom:6px;display:none;cursor:pointer;}
 #adminPassword.correct{border:2px solid green;}
 #adminPassword.wrong{border:2px solid red;}
 </style>
@@ -71,7 +72,7 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
     <div id="addNewsBtnContainer" style="display:none;text-align:center;margin-bottom:10px;">
         <button id="showAddFormBtn" style="background:#1da3ff;color:white;padding:10px 14px;border:none;border-radius:8px;font-weight:bold;">Ajouter une actualité</button>
     </div>
-    <div id="addNewsDiv" style="display:none;">
+    <div id="addNewsDiv" style="display:none;margin-top:12px;">
         <input id="source" placeholder="Source" style="width:100%;padding:8px;margin-top:6px;">
         <input id="title" placeholder="Titre" style="width:100%;padding:8px;margin-top:6px;">
         <textarea id="description" placeholder="Description" style="width:100%;padding:8px;margin-top:6px;"></textarea>
@@ -103,6 +104,7 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
 <div id="panel-buteurs" class="panel" style="display:none; position:relative;">
     <button class="btn-back" onclick="goBack('panel-buteurs')">← Retour</button>
     <h1>Buteurs</h1>
+    <button id="editButeursBtn">Modifier</button>
     <table>
         <tr><th>Joueur</th><th>Buts</th></tr>
         <tr><td>Mbappé</td><td><input type="number" min="0" disabled></td></tr>
@@ -140,47 +142,104 @@ td input{width:60px;padding:4px;text-align:center;border-radius:4px;border:1px s
 </nav>
 
 <script>
-/* NAVIGATION */
+// NAVIGATION
 const navItems=document.querySelectorAll('.nav-item');
 const panels=document.querySelectorAll('.panel');
 navItems.forEach(btn=>{btn.addEventListener('click',()=>{panels.forEach(p=>p.style.display=(p.id===btn.dataset.target?'block':'none'));navItems.forEach(n=>n.classList.toggle('active',n===btn));});});
 function goBack(){panels.forEach(p=>p.style.display="none");document.getElementById("panel-actu").style.display="block";navItems.forEach(n=>n.classList.toggle('active', n.dataset.target==="panel-actu"));}
 
-/* ADMIN */
+// ADMIN
 let adminActive=false;
 const addNewsBtnContainer=document.getElementById("addNewsBtnContainer");
 const editPlayersBtn=document.getElementById("editPlayersBtn");
 const addMatchRecentBtn=document.getElementById("addMatchRecentBtn");
+const editButeursBtn=document.getElementById("editButeursBtn");
 const buteursInputs=document.querySelectorAll("#panel-buteurs input");
+
 function activateAdmin(){
-  adminActive=true; localStorage.setItem("admin","on");
+  adminActive=true;
+  localStorage.setItem("admin","on");
   addNewsBtnContainer.style.display="block";
   editPlayersBtn.style.display="block";
   addMatchRecentBtn.style.display="block";
+  editButeursBtn.style.display="block";
   buteursInputs.forEach(i=>i.disabled=false);
   document.querySelectorAll(".team-name-match,.score-match,.meta").forEach(e=>e.contentEditable=true);
 }
-document.getElementById("adminBtn").onclick=()=>document.getElementById("adminForm").style.display="block";
 
-/* ADMIN LOGIN */
+// Admin Login
+document.getElementById("adminBtn").onclick=()=>document.getElementById("adminForm").style.display="block";
 document.getElementById("checkPassword").onclick=()=>{
   const input=document.getElementById("adminPassword");
-  if(input.value==="5525"){
-    input.classList.remove("wrong"); input.classList.add("correct");
-    activateAdmin();
-    document.getElementById("adminForm").style.display="none";
-  } else { input.classList.remove("correct"); input.classList.add("wrong"); }
+  if(input.value==="5525"){input.classList.remove("wrong");input.classList.add("correct");activateAdmin();document.getElementById("adminForm").style.display="none";}
+  else {input.classList.remove("correct");input.classList.add("wrong");}
 };
 
-/* ACTUALITÉS */
+// ACTUALITÉS
 let news=JSON.parse(localStorage.getItem("news"))||[];
 function displayNews(){const list=document.getElementById("newsList");list.innerHTML="";news.forEach((n,i)=>{let div=document.createElement("div");div.className="news-item";div.innerHTML=`${n.image?`<img src="${n.image}">`:""}<div class="source">${n.source}</div><div class="title">${n.title}</div><div class="description">${n.description}</div><div class="time">${n.time}</div>`;list.prepend(div);});} displayNews();
 
-/* MATCHS RÉCENTS */
-const template=document.getElementById('matchTemplate'); const container=document.getElementById('cardsContainer'); const addBtn=document.getElementById('addMatchRecentBtn');
-function enableLogoClick(card){const logos=card.querySelectorAll('.flag-match img');logos.forEach(img=>{img.onclick=()=>{if(!adminActive)return;const url=prompt('Entrez le lien de l\'image :'); if(url) img.src=url;};});}
+document.getElementById("showAddFormBtn").onclick=()=>{document.getElementById("addNewsDiv").style.display="block";document.getElementById("addNewsBtnContainer").style.display="none";}
+document.getElementById("addNewsBtn").onclick=()=>{
+  let n={source:source.value,title:title.value,description:description.value,image:imageURL.value,time:time.value};
+  news.push(n);localStorage.setItem("news",JSON.stringify(news));displayNews();
+  source.value=title.value=description.value=imageURL.value=time.value="";document.getElementById("addNewsDiv").style.display="none";document.getElementById("addNewsBtnContainer").style.display="block";
+}
+
+// BUTEURS
+editButeursBtn.onclick=()=>{buteursInputs.forEach(i=>{let newVal=prompt("Nombre de buts :",i.value);if(newVal!==null)i.value=newVal;});}
+
+// MATCHS RÉCENTS
+const template=document.getElementById('matchTemplate'); 
+const container=document.getElementById('cardsContainer'); 
+const addBtn=document.getElementById('addMatchRecentBtn');
+
+function enableLogoClick(card){
+  const logos=card.querySelectorAll('.flag-match img');
+  logos.forEach(img=>{img.onclick=()=>{if(!adminActive)return;const url=prompt('Entrez le lien de l\'image :');if(url) img.src=url;}});
+}
+
 enableLogoClick(template);
-addBtn.onclick=()=>{if(!adminActive)return;const clone=template.cloneNode(true);clone.removeAttribute('id');container.appendChild(clone);enableLogoClick(clone);};
+
+addBtn.onclick=()=>{
+  if(!adminActive)return;
+  const clone=template.cloneNode(true);
+  clone.removeAttribute('id');
+  container.appendChild(clone);
+  enableLogoClick(clone);
+  saveMatchs();
+};
+
+// LocalStorage pour matchs récents
+function saveMatchs(){
+  const matchs=[];
+  document.querySelectorAll(".match-card").forEach(card=>{
+    const teamA=card.querySelectorAll(".team-name-match")[0].textContent;
+    const score=card.querySelector(".score-match").textContent;
+    const teamB=card.querySelectorAll(".team-name-match")[1].textContent;
+    const meta=card.querySelector(".meta").textContent;
+    const logoA=card.querySelectorAll(".flag-match img")[0].src;
+    const logoB=card.querySelectorAll(".flag-match img")[1].src;
+    matchs.push({teamA,score,teamB,meta,logoA,logoB});
+  });
+  localStorage.setItem("matchsRecent",JSON.stringify(matchs));
+}
+
+function loadMatchs(){
+  const matchs=JSON.parse(localStorage.getItem("matchsRecent"))||[];
+  matchs.forEach(m=>{
+    const clone=template.cloneNode(true); clone.removeAttribute('id');
+    clone.querySelectorAll(".team-name-match")[0].textContent=m.teamA;
+    clone.querySelector(".score-match").textContent=m.score;
+    clone.querySelectorAll(".team-name-match")[1].textContent=m.teamB;
+    clone.querySelector(".meta").textContent=m.meta;
+    clone.querySelectorAll(".flag-match img")[0].src=m.logoA;
+    clone.querySelectorAll(".flag-match img")[1].src=m.logoB;
+    container.appendChild(clone);
+    enableLogoClick(clone);
+  });
+}
+loadMatchs();
 </script>
 </body>
 </html>
