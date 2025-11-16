@@ -81,16 +81,79 @@
 
     <div style="margin-bottom:10px">
 
-    <div id="addNewsDiv" style="display:none" class="card">
-      <input id="source" placeholder="Source">
-      <input id="title" Bonjour="Titre">
-      <textarea id="description" placeholder="Description"></textarea>
-      <input id="imageURL" placeholder="URL image (optionnel)">
-      <input id="time" placeholder="Temps (ex : il y a 2h)">
-      <div style="margin-top:8px">
-        <button id="addNewsBtn">Ajouter</button>
+    <!-- 🔥 Actualité PRO (CACHÉ) -->
+<div id="actualitePro" style="display:none;">
+
+  <div style="
+      background:#ffffff;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 4px 15px rgba(0,0,0,0.15);
+      max-width:420px;
+      margin:auto;
+      font-family:Arial, sans-serif;
+  ">
+
+      <!-- Image -->
+      <div style="width:100%; height:200px; overflow:hidden;">
+          <img src="IMAGE_ICI.jpg" style="
+              width:100%;
+              height:100%;
+              object-fit:cover;
+              display:block;
+          ">
       </div>
-    </div>
+
+      <!-- Contenu -->
+      <div style="padding:14px 16px;">
+
+          <!-- Source -->
+          <div style="
+              font-size:12px;
+              color:#ff7a00;
+              text-transform:uppercase;
+              font-weight:bold;
+              margin-bottom:6px;
+          ">
+              Nom de la source
+          </div>
+
+          <!-- Titre -->
+          <div style="
+              font-size:17px;
+              font-weight:bold;
+              color:#111;
+              margin-bottom:8px;
+              line-height:1.3;
+          ">
+              Titre professionnel de l’actualité ici
+          </div>
+
+          <!-- Description -->
+          <div style="
+              font-size:14px;
+              color:#444;
+              line-height:1.4;
+              margin-bottom:12px;
+          ">
+              Petite description professionnelle, propre et bien lisible…
+          </div>
+
+          <!-- Temps -->
+          <div style="
+              font-size:12px;
+              color:#888;
+              border-top:1px solid #eee;
+              padding-top:8px;
+              text-align:right;
+          ">
+              Il y a X heures
+          </div>
+
+      </div>
+  </div>
+
+</div>
 
     <div id="newsList"></div>
   </section>
