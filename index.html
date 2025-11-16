@@ -81,74 +81,25 @@
 
     <div style="margin-bottom:10px">
 
-    <!-- 🔥 Actualité PRO (CACHÉ) -->
-<div id="actualitePro" style="display:none;">
+   <script>
+  // ⚡ Ajouter une actualité directement
+  let storedNews = JSON.parse(localStorage.getItem('news')) || [];
 
-  <div style="
-      background:#ffffff;
-      border-radius:14px;
-      overflow:hidden;
-      box-shadow:0 4px 15px rgba(0,0,0,0.15);
-      max-width:420px;
-      margin:auto;
-      font-family:Arial, sans-serif;
-  ">
+  // Nouvelle actualité pro
+  storedNews.push({
+    source: "Le Monde",
+    title: "FC Légende gagne le championnat",
+    description: "Le FC Légende a remporté le match final avec un score incroyable, sous les acclamations des supporters.",
+    image: "https://upload.wikimedia.org/wikipedia/commons/6/6a/Stade_de_football.jpg",
+    time: "il y a 2h"
+  });
 
-      <!-- Image -->
-      <div style="width:100%; height:200px; overflow:hidden;">
-          <https://i.postimg.cc/bww0XC40/images-(5).jpg" style="
-              width:100%;
-              height:100%;
-              object-fit:cover;
-              display:block;
-          ">
-      </div>
+  // Sauvegarder dans localStorage
+  localStorage.setItem('news', JSON.stringify(storedNews));
 
-      <!-- Contenu -->
-      <div style="padding:14px 16px;">
-
-          <!-- Source -->
-          <div style="
-              font-size:12px;
-              color:#ff7a00;
-              text-transform:uppercase;
-              font-weight:bold;
-              margin-bottom:6px;
-          ">
-              bienvenue chez nous 
-          </div>
-
-          <!-- Titre -->
-          <div style="
-              font-size:17px;
-              font-weight:bold;
-              color:#111;
-              margin-bottom:8px;
-              line-height:1.3;
-          ">
-              c'est moi zakaria 
-          </div>
-
-          <!-- Description -->
-          <div style="
-              font-size:14px;
-              color:#444;
-              line-height:1.4;
-              margin-bottom:12px;
-          ">
-              blessure de camarade 🤔 
-          </div>
-
-          <!-- Temps -->
-          <div style="
-              font-size:12px;
-              color:#888;
-              border-top:1px solid #eee;
-              padding-top:8px;
-              text-align:right;
-          ">
-              il y'a 10 minutes 
-          </div>
+  // Afficher dans l'application
+  renderNews();
+</script>
 
       </div>
   </div>
