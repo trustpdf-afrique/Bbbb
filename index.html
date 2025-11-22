@@ -122,6 +122,116 @@
             line-height:1.45;
             margin:0;
         }
+
+     :root{
+      --orange:#f6a800;
+      --blue:#0d7bff;
+      --blue-dark:#005fd1;
+      --card-bg:#8f8f8f;
+      --page-bg:#f5f5f5;
+    }
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:var(--page-bg);
+      padding-bottom:90px;
+    }
+
+    .site-header{
+      background:var(--orange);
+      text-align:center;
+      color:#fff;
+      font-size:22px;
+      font-weight:bold;
+      padding:16px;
+      position:sticky;
+      top:0;
+    }
+
+    main{
+      max-width:900px;
+      margin:20px auto;
+      padding:0 16px;
+    }
+    h2{
+      font-size:22px;
+      font-weight:bold;
+      margin-bottom:14px;
+    }
+
+    .player-card{
+      background:var(--card-bg);
+      border-radius:18px;
+      padding:30px 20px 22px;
+      margin:30px 0;
+      text-align:center;
+      color:white;
+      position:relative;
+      box-shadow:0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .player-avatar{
+      width:90px;
+      height:90px;
+      border-radius:50%;
+      overflow:hidden;
+      border:5px solid rgba(255,255,255,0.3);
+      margin:-65px auto 10px;
+      background:#ddd;
+    }
+    .player-avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    .player-name{
+      font-size:20px;
+      font-weight:600;
+      margin:5px 0;
+    }
+    .player-meta{
+      font-size:14px;
+      opacity:0.95;
+      margin:3px 0;
+    }
+
+    /* ⭐ Nouveau badge capitaine */
+    .captain-badge{
+      position:absolute;
+      left:-10px;          
+      top:50%;
+      transform:translateY(-50%);
+      background:#ffd700;
+      color:#000;
+      font-size:12px;
+      font-weight:bold;
+      padding:4px 8px;
+      border-radius:10px;
+      box-shadow:0 2px 4px rgba(0,0,0,0.25);
+    }
+
+    .bottom-nav{
+      position:fixed;
+      bottom:0;
+      left:0;
+      right:0;
+      height:70px;
+      background:linear-gradient(180deg,var(--blue),var(--blue-dark));
+      display:flex;
+      justify-content:space-around;
+      align-items:center;
+      box-shadow:0 -4px 14px rgba(0,0,0,0.2);
+    }
+    .nav-btn{
+      color:white;
+      font-weight:bold;
+      padding:12px 20px;
+      border-radius:10px;
+    }
+    .active{
+      background:rgba(255,255,255,0.2);
+}
     </style>
 </head>
 
@@ -167,7 +277,97 @@
         <h2>MATCHS</h2>
         <p>Ici nous allons mettre les matchs récents et à venir.</p>
     </div>
+  
+  <!-- 1 — CAPITAINE -->
+  <article class="player-card">
+    <div class="captain-badge">★</div>
+    <div class="player-avatar"><img src="https://picsum.photos/200?1"></div>
+    <div class="player-name">Unai Simon</div>
+    <div class="player-meta">Athletic Bilbao · GK</div>
+    <div class="player-meta">Espagne</div>
+    <div class="player-meta">Âge : 28</div>
+  </article>
 
+  <!-- 2 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?2"></div>
+    <div class="player-name">Kylian Mbappé</div>
+    <div class="player-meta">Paris SG · Attaquant</div>
+    <div class="player-meta">France</div>
+    <div class="player-meta">Âge : 26</div>
+  </article>
+
+  <!-- 3 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?3"></div>
+    <div class="player-name">Lionel Messi</div>
+    <div class="player-meta">Inter Miami · Attaquant</div>
+    <div class="player-meta">Argentine</div>
+    <div class="player-meta">Âge : 36</div>
+  </article>
+
+  <!-- 4 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?4"></div>
+    <div class="player-name">Cristiano Ronaldo</div>
+    <div class="player-meta">Al Nassr · Attaquant</div>
+    <div class="player-meta">Portugal</div>
+    <div class="player-meta">Âge : 39</div>
+  </article>
+
+  <!-- 5 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?5"></div>
+    <div class="player-name">Neymar Jr</div>
+    <div class="player-meta">Al-Hilal · Attaquant</div>
+    <div class="player-meta">Brésil</div>
+    <div class="player-meta">Âge : 33</div>
+  </article>
+
+  <!-- 6 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?6"></div>
+    <div class="player-name">Kevin De Bruyne</div>
+    <div class="player-meta">Man City · Milieu</div>
+    <div class="player-meta">Belgique</div>
+    <div class="player-meta">Âge : 33</div>
+  </article>
+
+  <!-- 7 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?7"></div>
+    <div class="player-name">Erling Haaland</div>
+    <div class="player-meta">Man City · Attaquant</div>
+    <div class="player-meta">Norvège</div>
+    <div class="player-meta">Âge : 24</div>
+  </article>
+
+  <!-- 8 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?8"></div>
+    <div class="player-name">Luka Modrić</div>
+    <div class="player-meta">Real Madrid · Milieu</div>
+    <div class="player-meta">Croatie</div>
+    <div class="player-meta">Âge : 38</div>
+  </article>
+
+  <!-- 9 -->
+  <article class="player-card">
+    <div class="player-avatar"><img src="https://picsum.photos/200?9"></div>
+    <div class="player-name">Mohamed Salah</div>
+    <div class="player-meta">Liverpool · Attaquant</div>
+    <div class="player-meta">Égypte</div>
+    <div class="player-meta">Âge : 32</div>
+  </article>
+
+</main>
+
+<nav class="bottom-nav">
+  <div class="nav-btn">Actu</div>
+  <div class="nav-btn active">Profil</div>
+  <div class="nav-btn">Buteurs</div>
+  <div class="nav-btn">Matchs</div>
+</nav>
     <!-- BUTEURS -->
     <div id="buteurs" class="page">
         <h2>BUTEURS</h2>
